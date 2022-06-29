@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+    <link rel='stylesheet' href='./css/index.css'></link>
+    <script src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous'></script>
+    <script src='/socket.io/socket.io.js'></script>
+    <script src='/js/ChatPrototypes.js' type='module'></script>
+    <script src='/js/ChatUI.js' type='module'></script>
+    <script src='/js/Chat.js' type='module'></script>
+
+	<title>WebChat</title>
+</head>
+
+<body>
+    <div id='content'>
+        <div id='room'></div>
+            <div id='room-list'></div>
+            <div id='message'></div>
+            <form id='send-form'>
+                <input id='send-message'/>
+                <input id='send-button' type='submit' value='Send'>
+                <div id='help'>
+                    Chat commands:
+                    <ul>
+                        <li>Change nickname:<code>/nick [username]</code></li>
+                    </ul>
+                </div>
+            </form>
+    </div>
+</body>
+</html>

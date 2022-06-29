@@ -1,0 +1,19 @@
+{
+  "name": "webchat",
+  "version": "0.0.1",
+  "description": "a basic prototype of webchat",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "LordLucass",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1",
+    "http": "^0.0.1-security",
+    "path": "^0.12.7",
+    "socket.io": "3.1.2"
+  },
+  "packageManager": "yarn@3.2.1"
+}
