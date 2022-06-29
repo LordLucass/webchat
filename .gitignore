@@ -1,4 +1,4 @@
-.pnp.cjs
 .yarn
 .yarn/*
 .yarnrc.yml
+.pnp.*
