@@ -16,8 +16,7 @@ const { sockets } = new Server(server)
 app.use(express.static(join(__dirname, 'public')))
 app.set('views', join(__dirname, 'public'))
 
-app.use('/', (_, res) => res.sender('./index.html'))
-app.use('/chat', (_, res) => res.sender('./index.html'))
+app.use('/', (_, res) => res.sendFile(__dirname + '/index.html'))
 
 import ChatStructure from './assets/js/Chat.js'
 

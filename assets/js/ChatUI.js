@@ -38,8 +38,8 @@ $(document).ready(() => {
 	socket.on('rooms', (rooms) => {
 		$('#room-list').empty()
 		for (let r in rooms) {
-			room = room.substring(0, room.length)
-			if (room) $('room-list').append(divEscapedContentElement(room))
+			r = r.substring(0, r.length)
+			if (r) $('room-list').append(divEscapedContentElement(r))
 		}
 	
 		$('#room-list div').click(() => {
