@@ -16,10 +16,10 @@ const { sockets } = new Server(server)
 app.use(express.static(join(__dirname, 'public')))
 app.set('views', join(__dirname, 'public'))
 
-app.use('/', (_, res) => res.sender('index.html'))
-app.use('/chat', (_, res) => res.sender('index.html'))
+app.use('/', (_, res) => res.sender('./index.html'))
+app.use('/chat', (_, res) => res.sender('./index.html'))
 
-import ChatStructure from './public/js/Chat.js'
+import ChatStructure from './assets/js/Chat.js'
 
 const Chat = new ChatStructure(server, sockets)
 
