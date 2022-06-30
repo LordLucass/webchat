@@ -24,15 +24,15 @@ $(document).ready(() => {
 
 	socket.on('usernameUpdate', (status) => {
 		let statusMessage
-		if (status.code === 200) statusMessage = status.message
-		if (status.code === 404) statusMessage = status.message
+		if (status.code === 200) statusMessage = status?.message
+		if (status.code === 404) statusMessage = status?.message
 
 		$('#message').append(divEscapedContentElement(statusMessage))
 	})
 
 	socket.on('userJoined', (info) => {
 		$('#room').text(info.room)
-		$('#message').append(divEscapedContentElement('You have entered a room!'))
+		//$('#message').append(divEscapedContentElement('You have entered a room!'))
 	})
 
 	socket.on('rooms', (rooms) => {

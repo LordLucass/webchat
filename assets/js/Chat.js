@@ -60,8 +60,7 @@ export default class Chat {
 		this.nicknames[socket.id] = this.defaultName
 		socket.emit('usernameUpdate', {
 			name: this.defaultName,
-			code: 200,
-			message: 'Your name has been set!'
+			code: 200
 		})
 		this.usedNames = [...this.usedNames, this.defaultName]
 		return this.usersCount + 1
