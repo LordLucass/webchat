@@ -13,8 +13,8 @@ const server = createServer(app)
 
 const { sockets } = new Server(server)
 
-app.use(express.static(join(__dirname, 'public')))
-app.set('views', join(__dirname, 'public'))
+app.use(express.static(join(__dirname, 'assets')))
+app.set('views', join(__dirname, 'assets'))
 
 app.use('/', (_, res) => res.sendFile(__dirname + '/index.html'))
 
