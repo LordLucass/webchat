@@ -26,7 +26,7 @@ export default class Chat {
 	joinRoom (socket, room) {
 		socket.join(room)
 		this.currentRoom[socket.id] = room
-		socket.emit('userJoined', () => { room: room }) //joinResult
+		socket.emit('userJoined', () => { room: room })
 
 		socket.broadcast.to(room).emit('sendMessage', {
 			message: `${this.nicknames[socket.id]} joined the room ${room}!`
