@@ -32,7 +32,7 @@ export default class Chat {
 			message: `${this.nicknames[socket.id]} joined the room ${room}!`
 		})
 
-		const usersInRoomMessage = (users) => `There are ${users} currently connected into this session.` 
+		const usersInRoomMessage = (users) => `There are ${users} users currently connected into this session.` 
 		let usersNames = [];
 
 		for (let s in socket.sockets) {
