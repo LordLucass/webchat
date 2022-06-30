@@ -11,6 +11,13 @@ ChatControl.prototype.sendMessage = function (room, text) {
 	this.socket.emit('sendMessage', message)
 }
 
+ChatControl.prototype.changeRoom = function (room) {
+	this.socket.emit('join', {
+		newRoom: room
+	})
+}
+
+// unfinished
 ChatControl.prototype.parseCommand = function (command) {
 	let room
 	let message
@@ -22,10 +29,16 @@ ChatControl.prototype.parseCommand = function (command) {
 			words.shift()
 			this.socket.emit('attemptChangeName', words)
 		break;
+		case 'room':
+			room = words.join(' ')
+			this.changeRoom(room)
+		break;
 		default:
 			message='Unknown command.'
 		break;
 	}
+
+	return message
 }
 
 export { ChatControl }

@@ -18,33 +18,35 @@ export default class Chat {
 			this.attemptJoinRoom(socket)
 
 			socket.on('rooms', () => socket.emit('rooms', socket.adapter.rooms))
+
+			this.userDisconnect(socket)
 		})
 	}
 
 	joinRoom (socket, room) {
 		socket.join(room)
 		this.currentRoom[socket.id] = room
-		socket.emit('userJoined', () => { room: room })
+		socket.emit('userJoined', () => { room: room }) //joinResult
 
 		socket.broadcast.to(room).emit('sendMessage', {
 			message: `${this.nicknames[socket.id]} joined the room ${room}!`
 		})
 
-		const usersInRoomMessage = (users) => `There are ${users} currently connected into this session.`
+		const usersInRoomMessage = (users) => `There are ${users} currently connected into this session.` 
 		let usersNames = [];
 
 		for (let s in socket.sockets) {
-			let userSocketID = socket.sockets[s].id
+			const userSocketID = socket.sockets[s].id
 			if (userSocketID != socket.id) usersNames = [...usersNames, this.nicknames[userSocketID]]
 		}
 
-		socket.emit('sendMessage', { text: usersInRoomMessage(usersNames) })
+		socket.emit('sendMessage', { text: usersInRoomMessage(usersNames.length) })
 	}
 
 	attemptJoinRoom (socket) {
 		socket.on('joinRoom', (room) => {
 			socket.leave(this.currentRoom[socket.id])
-			joinRoom(socket, room.newRoom)
+			this.joinRoom(socket, room.newRoom)
 		})
 	}
 
@@ -55,6 +57,7 @@ export default class Chat {
 			})
 		})
 	}
+
 
 	assignUsername (socket) {
 		this.nicknames[socket.id] = this.defaultName
@@ -75,8 +78,8 @@ export default class Chat {
 				})
 			} else {
 				if (this.usedNames.indexOf(name) == -1) {
-					let oldName = this.nicknames[socket.id]
-					let oldNameIndex = this.usedNames.indexOf(oldName)
+					const oldName = this.nicknames[socket.id]
+					const oldNameIndex = this.usedNames.indexOf(oldName)
 					this.usedNames = [...this.usedNames, name]
 					this.nicknames[socket.id] = name
 					delete usedNames[oldName]
@@ -86,10 +89,10 @@ export default class Chat {
 						message: 'Your name has been changed!'
 					})
 					socket.broadcast.to(currentRoom[socket.id]).emit('sendMessage', {
-						text: `${oldName} changed our name to ${name}!`
+						text: `${oldName} changed your name to ${name}!`
 					})
 				} else {
-					socket.emit('changeUsername', {
+					socket.emit('usernameUpdate', {
 						code: 404,
 						message: 'That name is already in use by other people!'
 					})
@@ -99,7 +102,7 @@ export default class Chat {
 	}
 
 	userDisconnect (socket) {
-		socket.on('diconnect', () => {
+		socket.on('userDisconnected', () => {
 			const name = this.usedNames.indexOf(this.nicknames[socket.id])
 			delete this.usedNames[name]
 			delete this.nicknames[socket.id]

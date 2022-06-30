@@ -2,21 +2,21 @@ import { ChatControl } from './ChatPrototypes.js'
 
 const socket = io.connect()
 
-function processUserInputs(controller, socket) {
+function processUserInputs(controller) {
 	const message = $('send-message').val()
 	let systemCommand
 
 	if (message.charAt(0) === '/') {
 		systemCommand = controller.parseCommand(message)
 		if (systemCommand) {
-			$('message').append(divSystemContentElement(systemCommand))
+			$('#message').append(divSystemContentElement(systemCommand))
 		}
 	} else {
 		controller.sendMessage($('#room').text(), message)
         $('#message').append(divEscapedContentElement(message))
         $('#message').scrollTop($('#message').prop('scrollHeight'))
 	}
-	$('#send-message').val('');
+	$('#send-message').val('')
 }
 
 $(document).ready(() => {
@@ -32,8 +32,12 @@ $(document).ready(() => {
 
 	socket.on('userJoined', (info) => {
 		$('#room').text(info.room)
-		//$('#message').append(divEscapedContentElement('You have entered a room!'))
 	})
+
+    socket.on('sendMessage', (message) => {
+        const newElement = $('<div></div>').text(message.text)
+        $('#message').append(newElement)
+    })
 
 	socket.on('rooms', (rooms) => {
 		$('#room-list').empty()
@@ -54,7 +58,7 @@ $(document).ready(() => {
 		$('#send-message').focus()
 
     	$('#send-form').submit(function () {
-        	processUserInputs(Chat, socket);
+        	processUserInputs(Chat);
         	return false;
     	});
 	});
